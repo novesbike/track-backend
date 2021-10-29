@@ -3,6 +3,7 @@ package com.hexagonal.api.core.domain.entity;
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 

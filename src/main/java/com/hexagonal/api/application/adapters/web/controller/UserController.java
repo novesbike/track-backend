@@ -1,11 +1,13 @@
 package com.hexagonal.api.application.adapters.web.controller;
 
 import com.hexagonal.api.application.dtos.RegisterUserRequestDTO;
+import com.hexagonal.api.application.dtos.RegisterUserResponseDTO;
 import com.hexagonal.api.core.domain.entity.Role;
 import com.hexagonal.api.core.domain.entity.UserAuth;
 import com.hexagonal.api.core.domain.entity.UserProfile;
 import com.hexagonal.api.core.ports.inbound.UserAuthServicePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +25,9 @@ public class UserController {
   private final UserAuthServicePort userService;
 
   @PostMapping
-  private ResponseEntity<Void> register(@RequestBody RegisterUserRequestDTO user) {
+  private ResponseEntity<RegisterUserResponseDTO> register(@RequestBody RegisterUserRequestDTO user) {
 
-    userService.register(
+    var accountCreated = userService.register(
             new UserAuth(
                     user.getEmail(),
                     user.getPassword(),
@@ -34,6 +36,8 @@ public class UserController {
             )
     );
 
-    return new ResponseEntity<>(null, HttpStatus.CREATED);
+    var responseDTO = new RegisterUserResponseDTO(accountCreated);
+
+    return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
   }
 }
