@@ -1,0 +1,13 @@
+language: java
+
+jdk: oraclejdk11
+
+install: true
+
+script:
+  - ./mvnw clean install
+
+# Aumentar a velocidade dos builds.
+cache:
+  directories:
+    - $HOME/.m2
