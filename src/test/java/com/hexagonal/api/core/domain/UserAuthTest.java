@@ -3,7 +3,6 @@ package com.hexagonal.api.core.domain;
 import com.hexagonal.api.core.domain.entity.UserAuth;
 import com.hexagonal.api.core.domain.entity.UserProfile;
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,7 +20,7 @@ class UserAuthTest {
 
     var email = "email@test.com";
     var password = "pass1234";
-    var userProfile = new UserProfile("foo");
+    var userProfile = "foo";
 
     assertDoesNotThrow(() -> {
       var account = new UserAuth(email, password, userProfile);
@@ -29,7 +28,7 @@ class UserAuthTest {
       assertNotNull(account.getRoles().isEmpty());
       assertEquals(email, account.getEmail());
       assertEquals(password, account.getPassword());
-      assertEquals(userProfile.getFullName(), account.getUserProfile().getFullName());
+      assertEquals(userProfile, account.getUserProfile().getFullName());
 
     });
   }
@@ -42,7 +41,7 @@ class UserAuthTest {
 
     var password = "pass1234";
     var shortPassword = "123";
-    var userProfile = new UserProfile("foo");
+    var userProfile = "foo";
 
     assertThrows(InvalidAttributeException.class, () -> new UserAuth(null, password, userProfile));
     assertThrows(InvalidAttributeException.class, () -> new UserAuth("  ", password, userProfile));
@@ -56,8 +55,8 @@ class UserAuthTest {
 
     assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null));
 
-    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null, userProfile));
-    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, Collections.emptyList(), userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null, new UserProfile(userProfile)));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, Collections.emptyList(), new UserProfile(userProfile)));
   }
 
   @Test
@@ -65,7 +64,7 @@ class UserAuthTest {
 
     var email = "email@test.com";
     var password = "pass1234";
-    var userProfile = new UserProfile("foo");
+    var userProfile = "foo";
     var account = new UserAuth(email, password, userProfile);
 
     assertFalse(account.isActive());
@@ -74,7 +73,7 @@ class UserAuthTest {
   @Test
   void aposRegistrarUsuarioOEmailDeveraSerConfirmado() {
     // scenery
-    var newAccount = new UserAuth("email@test.com", "123@pass", new UserProfile("foo"));
+    var newAccount = new UserAuth("email@test.com", "123@pass", "foo");
     assertFalse(newAccount.isActive());
 
     // confirm email method

@@ -51,7 +51,7 @@ class UserAuthRepositoryImplTest {
     var email = "email@test.com";
     var password = "pass1234";
     var userProfile = new UserProfile("foo");
-    var newAccount = new UserAuth(email, "pass1234", new UserProfile("foo"));
+    var newAccount = new UserAuth(email, "pass1234", "foo");
 
     var saved = userAuthRepository.save(newAccount);
 

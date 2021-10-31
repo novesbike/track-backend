@@ -45,7 +45,7 @@ class UserAuthServiceImplTest {
   @Test
   void deveRegistrarUmNovoUsuarioComSucesso() {
     var email = "email@test.com";
-    var newAccount = new UserAuth(email, "pass1234", new UserProfile("foo"));
+    var newAccount = new UserAuth(email, "pass1234", "foo");
 
     when(repository.findByEmail(email)).thenReturn(Optional.empty());
     when(roleRepository.findAll()).thenReturn(List.of(new Role("ROLE_USER")));
@@ -57,11 +57,11 @@ class UserAuthServiceImplTest {
   @Test
   void naoDeveRegistrarComEmailJaCadastrado() {
     var emailAlreadyRegistered = "email@test.com";
-    var newAccount = new UserAuth(emailAlreadyRegistered, "pass1234", new UserProfile("foo"));
+    var newAccount = new UserAuth(emailAlreadyRegistered, "pass1234", "foo");
 
 
     when(repository.findByEmail(emailAlreadyRegistered)).thenReturn(Optional.of(
-            new UserAuth(emailAlreadyRegistered, "1234pass", new UserProfile("bar"))
+            new UserAuth(emailAlreadyRegistered, "1234pass", "bar")
     ));
 
     Assertions.assertThrows(EmailAlreadyRegisteredException.class, () -> userAuthServicePort.register(newAccount));
