@@ -41,8 +41,8 @@ public class UserAuth {
     setPassword(password);
   }
 
-  public void confirmEmail() {
-    this.active = true;
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public UUID getId() {
@@ -71,6 +71,11 @@ public class UserAuth {
 
     this.email = email;
   }
+
+  public void confirmEmail() {
+    this.active = true;
+  }
+
 
   public String getPassword() {
     return password;
