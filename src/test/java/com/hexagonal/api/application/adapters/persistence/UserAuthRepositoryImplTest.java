@@ -1,7 +1,7 @@
 package com.hexagonal.api.application.adapters.persistence;
 
-import com.hexagonal.api.application.adapters.persistence.entity.UserAuthEntity;
-import com.hexagonal.api.application.adapters.persistence.entity.UserProfileEntity;
+import com.hexagonal.api.application.adapters.persistence.model.UserAuthModel;
+import com.hexagonal.api.application.adapters.persistence.model.UserProfileModel;
 import com.hexagonal.api.application.adapters.persistence.jpa.UserAuthJpaRepository;
 import com.hexagonal.api.application.adapters.persistence.jpa.UserProfileJpaRepository;
 import com.hexagonal.api.core.domain.entity.UserAuth;
@@ -33,14 +33,14 @@ class UserAuthRepositoryImplTest {
 
   @BeforeEach
   void setUp() {
-    when(profileRepository.save(any(UserProfileEntity.class))).thenAnswer(param -> {
-      UserProfileEntity entity = param.getArgument(0);
+    when(profileRepository.save(any(UserProfileModel.class))).thenAnswer(param -> {
+      UserProfileModel entity = param.getArgument(0);
       entity.setId(UUID.randomUUID());
       return entity;
     });
 
-    when(repository.save(any(UserAuthEntity.class))).thenAnswer(param -> {
-      UserAuthEntity entity = param.getArgument(0);
+    when(repository.save(any(UserAuthModel.class))).thenAnswer(param -> {
+      UserAuthModel entity = param.getArgument(0);
       entity.setId(UUID.randomUUID());
       return entity;
     });

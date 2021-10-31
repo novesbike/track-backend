@@ -11,11 +11,12 @@ class UserProfileTest {
   @Test
   void naoDeveCriarPerfilSemUmNome() {
     Assertions.assertThrows(InvalidAttributeException.class, () -> new UserProfile(null));
+    Assertions.assertThrows(InvalidAttributeException.class, () -> new UserProfile("    "));
     Assertions.assertThrows(InvalidAttributeException.class, () -> new UserProfile(null, "my-avatar"));
   }
 
   @Test
-  void naoDeveAlterarNomeParaVazioOuNullo() {
+  void oUsuarioNaoTerONomeSetadoParaVazioOuNuloAposOSeuRegistro() {
     var profile = new UserProfile("foo");
 
     Assertions.assertThrows(InvalidAttributeException.class, () -> profile.setFullName(null));

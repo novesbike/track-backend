@@ -1,6 +1,6 @@
-package com.hexagonal.api.application.config;
+package com.hexagonal.api.application.configs;
 
-import com.hexagonal.api.application.adapters.persistence.entity.RoleEntity;
+import com.hexagonal.api.application.adapters.persistence.model.RoleModel;
 import com.hexagonal.api.application.adapters.persistence.jpa.RoleJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
 
     if (roles.isEmpty()) {
       repository.saveAll(List.of(
-            new RoleEntity("ROLE_USER"),
-            new RoleEntity("ROLE_TRAINER")
+            new RoleModel("ROLE_USER"),
+            new RoleModel("ROLE_TRAINER")
       ));
     }
 

@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.persistence.entity;
+package com.hexagonal.api.application.adapters.persistence.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users_auth")
-public class UserAuthEntity {
+public class UserAuthModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,12 +39,12 @@ public class UserAuthEntity {
           name = "user_auth_has_roles",
           joinColumns = @JoinColumn(name = "role_id"),
           inverseJoinColumns = @JoinColumn(name = "user_auth_id"))
-  private List<RoleEntity> roles = new ArrayList<>();
+  private List<RoleModel> roles = new ArrayList<>();
 
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_profile_id")
-  private UserProfileEntity userProfile;
+  private UserProfileModel userProfile;
 
   @Column
   @CreationTimestamp

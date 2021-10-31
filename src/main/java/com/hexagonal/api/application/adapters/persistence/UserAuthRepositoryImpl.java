@@ -1,8 +1,8 @@
 package com.hexagonal.api.application.adapters.persistence;
 
-import com.hexagonal.api.application.adapters.persistence.entity.RoleEntity;
-import com.hexagonal.api.application.adapters.persistence.entity.UserAuthEntity;
-import com.hexagonal.api.application.adapters.persistence.entity.UserProfileEntity;
+import com.hexagonal.api.application.adapters.persistence.model.RoleModel;
+import com.hexagonal.api.application.adapters.persistence.model.UserAuthModel;
+import com.hexagonal.api.application.adapters.persistence.model.UserProfileModel;
 import com.hexagonal.api.application.adapters.persistence.jpa.UserAuthJpaRepository;
 import com.hexagonal.api.application.adapters.persistence.jpa.UserProfileJpaRepository;
 import com.hexagonal.api.core.domain.entity.Role;
@@ -54,20 +54,20 @@ public class UserAuthRepositoryImpl implements UserAuthRepositoryPort {
     return Optional.empty();
   }
 
-  private List<RoleEntity> toEntity(List<Role> roles) {
-    return roles.stream().map(r -> new RoleEntity(r.getId(), r.getRole())).collect(Collectors.toList());
+  private List<RoleModel> toEntity(List<Role> roles) {
+    return roles.stream().map(r -> new RoleModel(r.getId(), r.getRole())).collect(Collectors.toList());
   }
 
-  private UserProfileEntity toEntity(UserProfile userProfile) {
-    return new UserProfileEntity(userProfile.getId(), userProfile.getFullName(), userProfile.getAvatar());
+  private UserProfileModel toEntity(UserProfile userProfile) {
+    return new UserProfileModel(userProfile.getId(), userProfile.getFullName(), userProfile.getAvatar());
   }
 
 
-  UserAuthEntity toEntity(UserAuth userAuth) {
+  UserAuthModel toEntity(UserAuth userAuth) {
     var rolesEntity = toEntity(userAuth.getRoles());
     var userProfileEntity = toEntity(userAuth.getUserProfile());
 
-    return UserAuthEntity.builder()
+    return UserAuthModel.builder()
             .id(userAuth.getId())
             .email(userAuth.getEmail())
             .password(userAuth.getPassword())
@@ -76,25 +76,25 @@ public class UserAuthRepositoryImpl implements UserAuthRepositoryPort {
             .build();
   }
 
-  private UserAuth toDomain(UserAuthEntity userAuthEntity) {
-    var rolesDomain = toDomain(userAuthEntity.getRoles());
-    var userProfileDomain = toDomain(userAuthEntity.getUserProfile());
+  private UserAuth toDomain(UserAuthModel userAuthModel) {
+    var rolesDomain = toDomain(userAuthModel.getRoles());
+    var userProfileDomain = toDomain(userAuthModel.getUserProfile());
 
     return new UserAuth(
-            userAuthEntity.getId(),
-            userAuthEntity.getEmail(),
-            userAuthEntity.getPassword(),
+            userAuthModel.getId(),
+            userAuthModel.getEmail(),
+            userAuthModel.getPassword(),
             rolesDomain,
-            userAuthEntity.isActive(),
+            userAuthModel.isActive(),
             userProfileDomain
     );
   }
 
-  private UserProfile toDomain(UserProfileEntity userProfile) {
+  private UserProfile toDomain(UserProfileModel userProfile) {
     return new UserProfile(userProfile.getId(), userProfile.getFullName(), userProfile.getAvatar());
   }
 
-  private List<Role> toDomain(List<RoleEntity> roles) {
+  private List<Role> toDomain(List<RoleModel> roles) {
     return roles.stream().map(r -> new Role(r.getRole())).collect(Collectors.toList());
   }
 }

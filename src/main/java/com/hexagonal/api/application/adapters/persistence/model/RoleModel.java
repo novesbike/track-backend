@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.persistence.entity;
+package com.hexagonal.api.application.adapters.persistence.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
-public class RoleEntity {
+public class RoleModel {
 
   @Id
   @GeneratedValue(strategy= GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class RoleEntity {
   @Column(nullable = false)
   private String role;
 
-  public RoleEntity(String role) {
+  public RoleModel(String role) {
     this.role = role;
   }
 }

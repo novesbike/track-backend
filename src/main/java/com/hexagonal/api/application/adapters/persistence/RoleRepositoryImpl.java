@@ -18,7 +18,7 @@ public class RoleRepositoryImpl implements RoleRepositoryPort {
   @Override
   public List<Role> findAll() {
     return repository.findAll().stream()
-            .map(r -> new Role(r.getId(), r.getRole()))
+            .map(r -> new Role(r.getId(), r.getRole())) //
             .collect(Collectors.toList());
   }
 }

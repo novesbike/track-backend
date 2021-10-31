@@ -43,9 +43,8 @@ class UserAuthServiceImplTest {
   }
 
   @Test
-  void deveRegistrarUmNovoUsuario() {
+  void deveRegistrarUmNovoUsuarioComSucesso() {
     var email = "email@test.com";
-
     var newAccount = new UserAuth(email, "pass1234", new UserProfile("foo"));
 
     when(repository.findByEmail(email)).thenReturn(Optional.empty());

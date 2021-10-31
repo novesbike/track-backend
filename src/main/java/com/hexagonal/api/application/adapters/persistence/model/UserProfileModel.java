@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.persistence.entity;
+package com.hexagonal.api.application.adapters.persistence.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "user_profile")
-public class UserProfileEntity {
+public class UserProfileModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class UserProfileEntity {
   @UpdateTimestamp
   private LocalDateTime UpdatedAt;
 
-  public UserProfileEntity(UUID id, String fullName, String avatar) {
+  public UserProfileModel(UUID id, String fullName, String avatar) {
     this.id = id;
     this.fullName = fullName;
     this.avatar = avatar;

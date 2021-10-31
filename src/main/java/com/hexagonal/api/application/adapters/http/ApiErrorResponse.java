@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.web;
+package com.hexagonal.api.application.adapters.http;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

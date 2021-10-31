@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.web.controller;
+package com.hexagonal.api.application.adapters.http.controller;
 
 import com.hexagonal.api.application.dtos.RegisterUserRequestDTO;
 import com.hexagonal.api.application.dtos.RegisterUserResponseDTO;
@@ -7,7 +7,6 @@ import com.hexagonal.api.core.domain.entity.UserAuth;
 import com.hexagonal.api.core.domain.entity.UserProfile;
 import com.hexagonal.api.core.ports.inbound.UserAuthServicePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,13 +25,13 @@ public class UserController {
   private final UserAuthServicePort userService;
 
   @PostMapping
-  private ResponseEntity<RegisterUserResponseDTO> register(@RequestBody RegisterUserRequestDTO user) {
+  public ResponseEntity<RegisterUserResponseDTO> register(@RequestBody @Valid RegisterUserRequestDTO user) {
 
     var accountCreated = userService.register(
             new UserAuth(
                     user.getEmail(),
                     user.getPassword(),
-                    user.getRoles().stream().map(Role::new).collect(Collectors.toList()),
+                    user.getRoles() == null ? null : user.getRoles().stream().map(Role::new).collect(Collectors.toList()),
                     new UserProfile(user.getFullName())
             )
     );

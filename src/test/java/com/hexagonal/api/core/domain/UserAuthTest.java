@@ -8,65 +8,78 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 class UserAuthTest {
 
 
   @Test
-  void deveValidarOsDadosDoUsuario() {
+  void deveRegistrarNovoUsuarioComSucesso() {
 
     var email = "email@test.com";
     var password = "pass1234";
     var userProfile = new UserProfile("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       var account = new UserAuth(email, password, userProfile);
 
-      Assertions.assertNotNull(account.getRoles().isEmpty());
-      Assertions.assertEquals(email, account.getEmail());
-      Assertions.assertEquals(password, account.getPassword());
-      Assertions.assertEquals(userProfile.getFullName(), account.getUserProfile().getFullName());
+      assertNotNull(account.getRoles().isEmpty());
+      assertEquals(email, account.getEmail());
+      assertEquals(password, account.getPassword());
+      assertEquals(userProfile.getFullName(), account.getUserProfile().getFullName());
+
     });
   }
 
   @Test
-  void deveLancarErroQuandoTentarRegistrarUsuarioSemEmailOuSenha() {
+  void deveLancarErroQuandoTentarRegistrarUsuarioComAtributosInvalidos() {
+
+    var email = "email@test.com";
+    var invalidEmail = "itsInvalidEmail";
+
+    var password = "pass1234";
+    var shortPassword = "123";
+    var userProfile = new UserProfile("foo");
+
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(null, password, userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth("  ", password, userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(invalidEmail, password, userProfile));
+
+
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, null, userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, "   ", userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, shortPassword, userProfile));
+
+
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null));
+
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null, userProfile));
+    assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, Collections.emptyList(), userProfile));
+  }
+
+  @Test
+  void quandoUmUsuarioForRegistradoDeveraEstarPendendeDeConfirmacaoDeEmail() {
 
     var email = "email@test.com";
     var password = "pass1234";
     var userProfile = new UserProfile("foo");
+    var account = new UserAuth(email, password, userProfile);
 
-    Assertions.assertThrows(InvalidAttributeException.class, () -> new UserAuth(null, password, userProfile));
-    Assertions.assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, null, userProfile));
-    Assertions.assertThrows(InvalidAttributeException.class, () -> new UserAuth(email, password, null));
+    assertFalse(account.isActive());
   }
 
-
   @Test
-  void emailVerified() {
+  void aposRegistrarUsuarioOEmailDeveraSerConfirmado() {
+    // scenery
     var newAccount = new UserAuth("email@test.com", "123@pass", new UserProfile("foo"));
-    Assertions.assertFalse(newAccount.isActive());
+    assertFalse(newAccount.isActive());
 
-    // confirm email
+    // confirm email method
     newAccount.confirmEmail();
-    Assertions.assertTrue(newAccount.isActive());
+
+    assertTrue(newAccount.isActive());
   }
-
-  @Test
-  void deveLancarErroAoTentarSalvarEmailVazioOuNullo() {
-    var account = new UserAuth("email@test.com", "123@pass", new UserProfile("foo"));
-
-    Assertions.assertThrows(InvalidAttributeException.class, () -> account.setEmail(null));
-    Assertions.assertThrows(InvalidAttributeException.class, () -> account.setEmail("  "));
-  }
-
-  @Test
-  void deveLancarErroAoTentarSalvarSenhaVazioOuNulla() {
-    var account = new UserAuth("email@test.com", "123@pass", new UserProfile("foo"));
-
-    Assertions.assertThrows(InvalidAttributeException.class, () -> account.setPassword(null));
-    Assertions.assertThrows(InvalidAttributeException.class, () -> account.setPassword("  "));
-    Assertions.assertThrows(InvalidAttributeException.class, () -> account.setPassword("123"));
-  }
-
 }

@@ -3,9 +3,10 @@ package com.hexagonal.api.core.domain.entity;
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserAuth {
 
@@ -25,10 +26,10 @@ public class UserAuth {
   }
 
   public UserAuth(String email, String password, List<Role> roles, UserProfile userProfile) {
-    setRoles(roles);
-    setUserProfile(userProfile);
     setEmail(email);
     setPassword(password);
+    setUserProfile(userProfile);
+    setRoles(roles);
   }
 
   public UserAuth(UUID id, String email, String password, List<Role> roles, boolean active, UserProfile userProfile) {
@@ -52,9 +53,21 @@ public class UserAuth {
     return email;
   }
 
+  // TODO: implement RFC822: http://www.ex-parrot.com/pdw/Mail-RFC822-Address.html
+  private boolean isValidEmail(String email) {
+    String regex = "\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+    return pattern.matcher(email).matches();
+  }
+
   public void setEmail(String email) {
+
     if (email == null || email.isBlank())
       throw new InvalidAttributeException("Email cannot be blank");
+
+    if (!isValidEmail(email)) {
+      throw new InvalidAttributeException("The email address entered is not valid");
+    }
 
     this.email = email;
   }
@@ -79,7 +92,7 @@ public class UserAuth {
   }
 
   public void setRoles(List<Role> role) {
-    if (role.isEmpty()) throw new InvalidAttributeException("Password cannot be empty");
+    if (role == null || role.isEmpty()) throw new InvalidAttributeException("Role cannot be empty");
     this.roles = role;
   }
 

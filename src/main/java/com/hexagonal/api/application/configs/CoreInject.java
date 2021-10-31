@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.config;
+package com.hexagonal.api.application.configs;
 
 import com.hexagonal.api.NovesBikeApplication;
 import com.hexagonal.api.core.ports.inbound.UserAuthServicePort;
