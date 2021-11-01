@@ -3,6 +3,8 @@ spring:
     active: ${PROFILE:test}
   jpa:
     open-in-view: false
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 
 server:
   port: 8080

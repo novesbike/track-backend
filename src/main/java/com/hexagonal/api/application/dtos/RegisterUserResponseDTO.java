@@ -1,6 +1,8 @@
 package com.hexagonal.api.application.dtos;
 
-import com.hexagonal.api.core.domain.entity.UserAuth;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.hexagonal.api.core.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RegisterUserResponseDTO {
 
   private UUID id;
@@ -19,10 +22,10 @@ public class RegisterUserResponseDTO {
   private String fullName;
   private List<String> roles;
 
-  public RegisterUserResponseDTO(UserAuth accountCreated) {
+  public RegisterUserResponseDTO(User accountCreated) {
     this.id = accountCreated.getId();
     this.email = accountCreated.getEmail();
-    this.fullName = accountCreated.getUserProfile().getFullName();
+    this.fullName = accountCreated.getName();
     this.roles = accountCreated.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toList());
   }
 }

@@ -2,30 +2,36 @@ package com.hexagonal.api.core.domain.entity;
 
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Role {
 
   private UUID id;
-  private String role;
+  private String name;
   private String description;
+  private Instant createdAt;
 
-  public Role(String role) {
-    if (role == null || role.isBlank()) throw new InvalidAttributeException("Role cannot be null or empty");
-    this.role = role;
+  // create role
+  public Role(String name, String description) {
+    setName(name);
+    setDescription(description);
   }
 
-  public Role(String role, String desc) {
-    if (role == null || role.isBlank()) throw new InvalidAttributeException("Role cannot be null or empty");
-    if (desc == null || desc.isBlank()) throw new InvalidAttributeException("Role cannot be null or empty");
-    this.role = role;
-    this.description = desc;
-  }
-
-  public Role(UUID id, String role) {
+  // mapper role
+  public Role(UUID id, String name, String description, Instant createdAt) {
     this.id = id;
-    this.role = role;
+    setName(name);
+    setDescription(description);
+    this.createdAt = createdAt;
+  }
+
+  // mapper role
+  public Role(UUID id, String name, String description) {
+    this.id = id;
+    setName(name);
+    setDescription(description);
   }
 
   public UUID getId() {
@@ -33,11 +39,33 @@ public class Role {
   }
 
   public String getRole() {
-    return role;
+    return name;
   }
 
   public String getDescription() {
     return description;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    if (name == null || name.isBlank())
+      throw new InvalidAttributeException("Role name cannot be null or empty");
+
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    if (description == null || description.isBlank())
+      throw new InvalidAttributeException("Role description cannot be null or empty");
+
+    this.description = description;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
   }
 
   @Override
@@ -45,12 +73,12 @@ public class Role {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Role comparable = (Role) o;
-    return role.equals(comparable.role);
+    return name.equals(comparable.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(role);
+    return Objects.hash(name);
   }
 
   @Override

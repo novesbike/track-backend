@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.http;
+package com.hexagonal.api.application.adapters.web;
 
 import com.hexagonal.api.core.domain.exception.BusinessRuleException;
 import com.hexagonal.api.core.domain.exception.EmailAlreadyRegisteredException;
@@ -44,11 +44,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
   private ResponseEntity<ApiErrorResponse> buildUnprocessableEntity(String msg, HttpServletRequest request) {
     var error = "unprocessable entity";
-    var httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
+    var status = HttpStatus.UNPROCESSABLE_ENTITY;
     var message = msg;
     var path = request.getRequestURI();
-    var responseBody = new ApiErrorResponse(httpStatus.value(), error, message, path);
-    return ResponseEntity.status(httpStatus).body(responseBody);
+    var responseBody = new ApiErrorResponse(status.value(), error, message, path);
+    return ResponseEntity.status(status).body(responseBody);
   }
 
 

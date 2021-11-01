@@ -1,28 +1,42 @@
 package com.hexagonal.api.application.adapters.persistence.model;
 
-import lombok.AllArgsConstructor;
+import com.hexagonal.api.core.domain.entity.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "roles")
 public class RoleModel {
 
   @Id
-  @GeneratedValue(strategy= GenerationType.AUTO)
+  @GeneratedValue(generator = "UUID")
   private UUID id;
 
-  @Column(nullable = false)
-  private String role;
+  @Column(nullable = false, unique = true)
+  private String name;
 
-  public RoleModel(String role) {
-    this.role = role;
+  @Column(nullable = false)
+  private String description;
+
+  @CreationTimestamp
+  private Instant createdAt;
+
+  public RoleModel(Role domain) {
+    this.id = domain.getId();
+    this.name = domain.getRole();
+    this.description = domain.getDescription();
+    this.createdAt = domain.getCreatedAt();
+  }
+
+  public RoleModel(String name, String description) {
+    this.name = name;
+    this.description = description;
   }
 }
-

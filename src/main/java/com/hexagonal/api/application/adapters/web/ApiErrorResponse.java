@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.http;
+package com.hexagonal.api.application.adapters.web;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -28,4 +28,5 @@ public class ApiErrorResponse {
     this.message = message;
     this.path = path;
   }
+
 }

@@ -4,9 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 public class RegisterUserRequestDTO {
@@ -19,10 +16,8 @@ public class RegisterUserRequestDTO {
   private String password;
 
   @NotBlank
-  private String fullName;
+  private String name;
 
-  @NotNull
-  @NotEmpty
-  private List<String> roles;
+  private String avatar;
 
 }
