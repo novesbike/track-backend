@@ -38,6 +38,9 @@ public class UserModel {
   private String name;
   private String avatar;
 
+  @OneToMany(mappedBy="user")
+  private List<ActivityModel> activities;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_role",
@@ -61,5 +64,30 @@ public class UserModel {
     this.avatar = user.getAvatar();
     this.roles = user.getRoles().stream().map(RoleModel::new).collect(Collectors.toList());
     this.active = user.isActive();
+  }
+
+  public UserModel(String name, String email, String password, String avatar, List<RoleModel> roles) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.avatar = avatar;
+    this.roles = roles;
+
+  }
+
+  public User toDomain() {
+    var rolesDomain = roles.stream().map(RoleModel::toDomain).collect(Collectors.toList());
+
+    return new User(
+      id,
+      email,
+      password,
+      name,
+      avatar,
+      rolesDomain,
+      active,
+      createdAt,
+      updatedAt
+    );
   }
 }

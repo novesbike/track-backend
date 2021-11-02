@@ -1,15 +1,12 @@
 package com.hexagonal.api.application.configs;
 
 import com.hexagonal.api.NovesBikeApplication;
-import com.hexagonal.api.core.ports.inbound.CreateAccountUser;
-import com.hexagonal.api.core.ports.inbound.CreateRole;
-import com.hexagonal.api.core.ports.inbound.FetchAllRoles;
+import com.hexagonal.api.core.ports.inbound.*;
+import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.EmailServicePort;
 import com.hexagonal.api.core.ports.outbound.repository.RoleRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
-import com.hexagonal.api.core.usecases.CreateAccountUserImpl;
-import com.hexagonal.api.core.usecases.CreateRoleImpl;
-import com.hexagonal.api.core.usecases.FetchAllRolesImpl;
+import com.hexagonal.api.core.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +33,16 @@ public class CoreInject {
           EmailServicePort emailService
   ) {
     return new CreateAccountUserImpl(userAuthRepository, roleRepository, emailService);
+  }
+
+  @Bean
+  GetActivityHistory getActivityHistory(ActivityRepositoryPort repository) {
+    return new GetActivityHistoryImpl(repository);
+  }
+
+  @Bean
+  SaveMyActivity saveMyActivity(ActivityRepositoryPort repository, UserRepositoryPort userRepository) {
+    return new SaveMyActivityImpl(repository, userRepository);
   }
 
 }

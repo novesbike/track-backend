@@ -1,15 +1,15 @@
 package com.hexagonal.api.application.adapters.web.controller;
 
+import com.hexagonal.api.application.adapters.persistence.UserRepositoryAdapter;
 import com.hexagonal.api.application.dtos.RegisterUserRequestDTO;
 import com.hexagonal.api.core.domain.entity.User;
 import com.hexagonal.api.core.ports.inbound.CreateAccountUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final CreateAccountUser createAccountUser;
+  private final UserRepositoryAdapter adapter;
 
 
   @PostMapping
@@ -30,6 +31,14 @@ public class UserController {
     );
 
     return new ResponseEntity<>(account, HttpStatus.CREATED);
+  }
+
+
+  // TODO: remover
+  @GetMapping
+  public ResponseEntity<List<User>> index() {
+    var list = adapter.findAll();
+    return ResponseEntity.ok(list);
   }
 
 }

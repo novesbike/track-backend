@@ -39,4 +39,13 @@ public class RoleModel {
     this.name = name;
     this.description = description;
   }
+
+  public Role toDomain() {
+    return new Role(
+            id,
+            name,
+            description,
+            createdAt
+    );
+  }
 }

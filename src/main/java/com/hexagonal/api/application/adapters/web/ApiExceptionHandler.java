@@ -3,6 +3,7 @@ package com.hexagonal.api.application.adapters.web;
 import com.hexagonal.api.core.domain.exception.BusinessRuleException;
 import com.hexagonal.api.core.domain.exception.EmailAlreadyRegisteredException;
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
+import com.hexagonal.api.core.domain.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     var error = "unprocessable entity";
     var status = HttpStatus.UNPROCESSABLE_ENTITY;
     var message = msg;
+    var path = request.getRequestURI();
+    var responseBody = new ApiErrorResponse(status.value(), error, message, path);
+    return ResponseEntity.status(status).body(responseBody);
+  }
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ResponseEntity<ApiErrorResponse> invalidAttributeException(ResourceNotFoundException ex, HttpServletRequest request) {
+    var error = "not found";
+    var status = HttpStatus.NOT_FOUND;
+    var message = ex.getMessage();
     var path = request.getRequestURI();
     var responseBody = new ApiErrorResponse(status.value(), error, message, path);
     return ResponseEntity.status(status).body(responseBody);

@@ -3,13 +3,16 @@ package com.hexagonal.api.application.adapters.persistence;
 import com.hexagonal.api.application.adapters.persistence.jpa.UserJpaRepository;
 import com.hexagonal.api.application.adapters.persistence.model.RoleModel;
 import com.hexagonal.api.application.adapters.persistence.model.UserModel;
+import com.hexagonal.api.core.domain.entity.Activity;
 import com.hexagonal.api.core.domain.entity.Role;
 import com.hexagonal.api.core.domain.entity.User;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
@@ -21,40 +24,34 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
   @Override
   public User save(User user) {
     var model = toModel(user);
-    var saved = repository.save(model);
-    return toEntity(saved);
+    return repository.save(model).toDomain();
   }
 
   @Override
   public Optional<User> findEmail(String email) {
-    var model = repository.findByEmail(email);
+    var user = repository.findByEmail(email);
 
-    if (model != null) {
-      return Optional.of(toEntity(model));
+    if (user != null) {
+      return Optional.of(user.toDomain());
     }
 
     return Optional.empty();
   }
 
-  private User toEntity(UserModel saved) {
+  public List<User> findAll() {
+    var list = repository.findAll();
+    return list.stream().map(UserModel::toDomain).collect(Collectors.toList());
+  }
 
-    var roles = saved.getRoles()
-            .stream()
-            .map(r -> new Role(r.getId(), r.getName(), r.getDescription(), r.getCreatedAt()))
-            .collect(Collectors.toList());
+  @Override
+  public Optional<User> findUserById(UUID idUser) {
+    var user = repository.findById(idUser);
 
-    return new User(
-            saved.getId(),
-            saved.getEmail(),
-            saved.getPassword(),
-            saved.getName(),
-            saved.getAvatar(),
-            roles,
-            saved.isActive(),
-            saved.getCreatedAt(),
-            saved.getUpdatedAt()
+    if(user.isPresent()) {
+      return Optional.of(user.get().toDomain());
+    }
 
-    );
+    return Optional.empty();
   }
 
   private UserModel toModel(User user) {

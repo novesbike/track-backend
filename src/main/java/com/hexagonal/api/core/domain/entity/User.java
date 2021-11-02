@@ -56,6 +56,10 @@ public class User {
     this.updatedAt = updatedAt;
   }
 
+  public User(UUID id) {
+    this.id = id;
+  }
+
   public void addRole(Role role) {
     if (role == null)
       throw new InvalidAttributeException("Role cannot be null");
