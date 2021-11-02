@@ -13,14 +13,14 @@ public class ActivityDTO {
   private UUID id;
   private String title;
   private LocalDate date;
-  private LocalTime timing;
+  private LocalTime duration;
   private float distance;
 
   public ActivityDTO(Activity activity) {
     this.id = activity.getId();
     this.title = activity.getTitle();
     this.date = activity.getDate();
-    this.timing = activity.getTiming();
+    this.duration = activity.getDuration();
     this.distance = activity.getDistance();
   }
 }

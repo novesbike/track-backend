@@ -1,4 +1,4 @@
-package com.hexagonal.api.core.domain.entity;
+package com.hexagonal.api.core.domain.valueobjects;
 
 import java.util.Objects;
 

@@ -2,7 +2,7 @@ package com.hexagonal.api.application.configs;
 
 import com.hexagonal.api.NovesBikeApplication;
 import com.hexagonal.api.core.ports.inbound.*;
-import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
+import com.hexagonal.api.core.ports.outbound.repository.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.EmailServicePort;
 import com.hexagonal.api.core.ports.outbound.SecurityPort;
 import com.hexagonal.api.core.ports.outbound.repository.RoleRepositoryPort;
@@ -37,6 +37,11 @@ public class CoreInject {
   }
 
   @Bean
+  FetchAllUsers fetchAllUsers(UserRepositoryPort repository) {
+    return new FetchAllUsersImpl(repository);
+  }
+
+  @Bean
   GetActivityHistory getActivityHistory(ActivityRepositoryPort repository, SecurityPort security) {
     return new GetActivityHistoryImpl(repository, security);
   }
@@ -44,6 +49,11 @@ public class CoreInject {
   @Bean
   SaveMyActivity saveMyActivity(ActivityRepositoryPort repository, SecurityPort security) {
     return new SaveMyActivityImpl(repository, security);
+  }
+
+  @Bean
+  GetMyStats getMyStats(ActivityRepositoryPort repository, SecurityPort security) {
+    return new GetMyStatsImpl(repository, security);
   }
 
 }

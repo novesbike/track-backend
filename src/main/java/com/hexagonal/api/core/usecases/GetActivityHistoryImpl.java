@@ -1,12 +1,10 @@
 package com.hexagonal.api.core.usecases;
 
-import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.domain.exception.BusinessRuleException;
+import com.hexagonal.api.core.domain.exception.NotAuthorizedException;
+import com.hexagonal.api.core.domain.valueobjects.MyActivityHistory;
 import com.hexagonal.api.core.ports.inbound.GetActivityHistory;
-import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
+import com.hexagonal.api.core.ports.outbound.repository.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.SecurityPort;
-
-import java.util.List;
 
 public class GetActivityHistoryImpl implements GetActivityHistory {
 
@@ -19,11 +17,13 @@ public class GetActivityHistoryImpl implements GetActivityHistory {
   }
 
   @Override
-  public List<Activity> execute() {
+  public MyActivityHistory execute() {
 
-    var user = security.getAuthenticatedUser()
-            .orElseThrow(() -> new BusinessRuleException("No authorized!"));
+    var user = security.getAuthenticatedUser().orElseThrow(NotAuthorizedException::new);
 
-    return repository.searchAllMyActivities(user.getId());
+    var activities = repository.searchAllMyActivities(user.getId());
+    var stats = repository.getMyStats(user.getId());
+
+    return new MyActivityHistory(stats.getTotalAverageSpeed(), stats.getTotalDistance(), activities);
   }
 }

@@ -8,6 +8,7 @@ import com.hexagonal.api.core.domain.entity.Role;
 import com.hexagonal.api.core.domain.entity.User;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,11 +39,6 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     return Optional.empty();
   }
 
-  public List<User> findAll() {
-    var list = repository.findAll();
-    return list.stream().map(UserModel::toDomain).collect(Collectors.toList());
-  }
-
   @Override
   public Optional<User> findUserById(UUID idUser) {
     var user = repository.findById(idUser);
@@ -52,6 +48,12 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     return Optional.empty();
+  }
+
+  @Override
+  public List<User> findAll() {
+    var list = repository.findAll();
+    return list.stream().map(UserModel::toDomain).collect(Collectors.toList());
   }
 
   private UserModel toModel(User user) {

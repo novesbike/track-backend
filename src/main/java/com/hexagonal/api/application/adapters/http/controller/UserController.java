@@ -1,7 +1,7 @@
 package com.hexagonal.api.application.adapters.http.controller;
 
-import com.hexagonal.api.application.adapters.persistence.UserRepositoryAdapter;
 import com.hexagonal.api.core.domain.entity.User;
+import com.hexagonal.api.core.ports.inbound.FetchAllUsers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,12 +16,11 @@ import java.util.List;
 @RequestMapping("/v1/users")
 public class UserController {
 
-  private final UserRepositoryAdapter adapter;
+  private final FetchAllUsers fetchAllUsers;
 
   @PreAuthorize("hasAnyRole('ADMIN')")
   @GetMapping
   public ResponseEntity<List<User>> index() {
-    var list = adapter.findAll();
-    return ResponseEntity.ok(list);
+    return ResponseEntity.ok(fetchAllUsers.execute());
   }
 }

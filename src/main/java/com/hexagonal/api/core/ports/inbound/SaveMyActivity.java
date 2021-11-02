@@ -1,7 +1,7 @@
 package com.hexagonal.api.core.ports.inbound;
 
 import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.domain.entity.Coordinate;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,7 +13,7 @@ public interface SaveMyActivity {
           String title,
           String description,
           LocalDate date,
-          LocalTime timing,
+          LocalTime duration,
           float averageSpeed,
           float distance,
           float elevation,

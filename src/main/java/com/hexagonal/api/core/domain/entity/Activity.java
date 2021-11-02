@@ -1,6 +1,7 @@
 package com.hexagonal.api.core.domain.entity;
 
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class Activity  {
   private String title;
   private String description;
   private LocalDate date;
-  private final LocalTime timing;
+  private LocalTime duration;
   private final float averageSpeed;
   private final float distance;
   private final float elevation;
@@ -30,17 +31,17 @@ public class Activity  {
           String title,
           String description,
           LocalDate date,
-          LocalTime timing,
+          LocalTime duration,
           float averageSpeed,
           float distance,
           float elevation,
           List<Coordinate> coordinates
   ) {
-    this.user = user;
+    setUser(user);
     setTitle(title);
     this.description = description;
-    this.date = date;
-    this.timing = timing;
+    setDate(date);
+    setDuration(duration);
     this.averageSpeed = averageSpeed;
     this.distance = distance;
     this.elevation = elevation;
@@ -52,7 +53,7 @@ public class Activity  {
           String title,
           String description,
           LocalDate date,
-          LocalTime timing,
+          LocalTime duration,
           float averageSpeed,
           float distance,
           float elevation,
@@ -64,21 +65,36 @@ public class Activity  {
     this.id = id;
     setTitle(title);
     this.description = description;
-    this.date = date;
-    this.timing = timing;
+    setDate(date);
+    setDuration(duration);
     this.averageSpeed = averageSpeed;
     this.distance = distance;
     this.elevation = elevation;
     this.coordinates = coordinates;
-    this.user = user;
+    setUser(user);
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
   // setters
-  public void setTitle(String title) {
+  private void setTitle(String title) {
     if (title == null || title.isBlank()) throw new InvalidAttributeException("field title cannot be null or blank");
     this.title = title;
+  }
+
+  private void setDate(LocalDate date) {
+    if (date == null) throw new InvalidAttributeException("date cannot be null");
+    this.date = date;
+  }
+
+  private void setDuration(LocalTime duration) {
+    if (duration == null) throw new InvalidAttributeException("duration cannot be null");
+    this.duration = duration;
+  }
+
+  public void setUser(User user) {
+    if (duration == null) throw new InvalidAttributeException("user cannot be null");
+    this.user = user;
   }
 
   public void setDescription(String description) {
@@ -101,8 +117,8 @@ public class Activity  {
     return date;
   }
 
-  public LocalTime getTiming() {
-    return timing;
+  public LocalTime getDuration() {
+    return duration;
   }
 
   public float getAverageSpeed() {

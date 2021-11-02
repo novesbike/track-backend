@@ -1,9 +1,7 @@
 package com.hexagonal.api.core.ports.inbound;
 
-import com.hexagonal.api.core.domain.entity.Activity;
-
-import java.util.List;
+import com.hexagonal.api.core.domain.valueobjects.MyActivityHistory;
 
 public interface GetActivityHistory {
-  List<Activity> execute();
+  MyActivityHistory execute();
 }

@@ -1,18 +1,19 @@
 package com.hexagonal.api.application.adapters.http.controller;
 
-import com.hexagonal.api.application.adapters.persistence.ActivityService;
-import com.hexagonal.api.application.adapters.http.dtos.ActivityDTO;
 import com.hexagonal.api.application.adapters.http.dtos.ActivityDetailedDTO;
+import com.hexagonal.api.application.adapters.http.dtos.MyActivityHistoryDTO;
 import com.hexagonal.api.application.adapters.http.dtos.SaveActivityDTO;
+import com.hexagonal.api.core.domain.valueobjects.ActivityStats;
+import com.hexagonal.api.core.ports.inbound.FetchAllUsers;
 import com.hexagonal.api.core.ports.inbound.GetActivityHistory;
+import com.hexagonal.api.core.ports.inbound.GetMyStats;
 import com.hexagonal.api.core.ports.inbound.SaveMyActivity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class ActivityController {
 
   private final SaveMyActivity saveMyActivity;
   private final GetActivityHistory getActivityHistory;
-  private final ActivityService service;
+  private final GetMyStats getMyStats;
+  private final FetchAllUsers fetchAllUser;
 
   @PostMapping
   public ResponseEntity<ActivityDetailedDTO> saveActivity(@RequestBody SaveActivityDTO activity) {
@@ -40,20 +42,16 @@ public class ActivityController {
   }
 
 
-  @GetMapping
-  public ResponseEntity<List<ActivityDTO>> getActivityHistory() {
+  @GetMapping("/me")
+  public ResponseEntity<MyActivityHistoryDTO> getActivityHistory() {
     var activityList = getActivityHistory.execute();
-    var dto = activityList.stream().map(ActivityDTO::new).collect(Collectors.toList());
+    var dto = new MyActivityHistoryDTO(activityList);
     return ResponseEntity.ok(dto);
   }
 
-  // TODO: REMOVER
-  @GetMapping("/all")
-  public ResponseEntity<List<ActivityDTO>> fetchAll() {
-    var list = service.findAll();
-    var dto = list.stream().map(ActivityDTO::new).collect(Collectors.toList());
-    return ResponseEntity.ok(dto);
+  @GetMapping("/stats")
+  public ResponseEntity<ActivityStats> getMyStats(@PathVariable UUID id) {
+    return ResponseEntity.ok(getMyStats.execute());
   }
-
 
 }

@@ -1,8 +1,7 @@
 package com.hexagonal.api.application.adapters.persistence.model;
 
 import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.domain.entity.Coordinate;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +32,7 @@ public class ActivityModel {
 
   private String description;
   private LocalDate date;
-  private LocalTime timing;
+  private LocalTime duration;
   private float averageSpeed;
   private float distance;
   private float elevation;
@@ -57,7 +56,7 @@ public class ActivityModel {
     this.title = activity.getTitle();
     this.description = activity.getDescription();
     this.date = activity.getDate();
-    this.timing = activity.getTiming();
+    this.duration = activity.getDuration();
     this.averageSpeed = activity.getAverageSpeed();
     this.distance = activity.getDistance();
     this.elevation = activity.getElevation();
@@ -67,11 +66,11 @@ public class ActivityModel {
     this.updatedAt = activity.getUpdatedAt();
   }
 
-  public ActivityModel(UUID userId, String title, String description, LocalDate date, LocalTime timing, float averageSpeed, float distance, float elevation) {
+  public ActivityModel(UUID userId, String title, String description, LocalDate date, LocalTime duration, float averageSpeed, float distance, float elevation) {
     this.title = title;
     this.description = description;
     this.date = date;
-    this.timing = timing;
+    this.duration = duration;
     this.averageSpeed = averageSpeed;
     this.distance = distance;
     this.elevation = elevation;
@@ -84,7 +83,7 @@ public class ActivityModel {
             title,
             description,
             date,
-            timing,
+            duration,
             averageSpeed,
             distance,
             elevation,

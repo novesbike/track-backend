@@ -1,6 +1,6 @@
 package com.hexagonal.api.application.adapters.http.dtos;
 
-import com.hexagonal.api.core.domain.entity.Coordinate;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 import lombok.Data;
 
 import java.time.LocalDate;

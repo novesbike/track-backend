@@ -1,10 +1,10 @@
 package com.hexagonal.api.core.usecases;
 
 import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.domain.entity.Coordinate;
-import com.hexagonal.api.core.domain.exception.BusinessRuleException;
+import com.hexagonal.api.core.domain.exception.NotAuthorizedException;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 import com.hexagonal.api.core.ports.inbound.SaveMyActivity;
-import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
+import com.hexagonal.api.core.ports.outbound.repository.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.SecurityPort;
 
 import java.time.LocalDate;
@@ -26,22 +26,21 @@ public class SaveMyActivityImpl implements SaveMyActivity {
           String title,
           String description,
           LocalDate date,
-          LocalTime timing,
+          LocalTime duration,
           float averageSpeed,
           float distance,
           float elevation,
           List<Coordinate> coordinates
   ) {
 
-    var user = security.getAuthenticatedUser()
-            .orElseThrow(() -> new BusinessRuleException("No authorized!"));
+    var user = security.getAuthenticatedUser().orElseThrow(NotAuthorizedException::new);
 
     var activity = new Activity(
             user,
             title,
             description,
             date,
-            timing,
+            duration,
             averageSpeed,
             distance,
             elevation,

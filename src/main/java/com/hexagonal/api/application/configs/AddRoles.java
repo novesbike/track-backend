@@ -6,10 +6,7 @@ import com.hexagonal.api.application.adapters.persistence.jpa.UserJpaRepository;
 import com.hexagonal.api.application.adapters.persistence.model.ActivityModel;
 import com.hexagonal.api.application.adapters.persistence.model.RoleModel;
 import com.hexagonal.api.application.adapters.persistence.model.UserModel;
-import com.hexagonal.api.core.domain.entity.Role;
-import com.hexagonal.api.core.domain.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,8 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -38,6 +33,35 @@ public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
     this.userJpaRepository = userJpaRepository;
     this.activityJpaRepository = activityJpaRepository;
     this.bCrypt = bCrypt;
+  }
+
+  public static String getRandomTitle() {
+    var title = "Eu pedalei pela " + generateRandomIntIntRange(1, 1000) + " vez!";
+    return title;
+  }
+
+  public static float getRandomDouble() {
+    float x = (float) ((Math.random() * ((100 - 2) + 1)) + 2);
+    return x;
+  }
+
+  public static int generateRandomIntIntRange(int min, int max) {
+    Random r = new Random();
+    return r.nextInt((max - min) + 1) + min;
+  }
+
+  public static LocalDate getRandomDate() {
+    var year = generateRandomIntIntRange(2020, 2021);
+    var month = generateRandomIntIntRange(1, 10);
+    var days = generateRandomIntIntRange(1, 28);
+    return LocalDate.of(year, month, days);
+  }
+
+  public static LocalTime getRandomTiming() {
+    var hour = generateRandomIntIntRange(0, 23);
+    var minute = generateRandomIntIntRange(0, 59);
+    var second = generateRandomIntIntRange(0, 59);
+    return LocalTime.of(hour, minute, second);
   }
 
   @Override
@@ -61,7 +85,7 @@ public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
 
     var user1 = new UserModel("Maria", "a_vanessinha_1990@hotmail.com", "tJ=n8;M~68K;?X!W", "https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
     var user2 = new UserModel("Jorge", "aaanika2@hotmail.com", "^e?BXh5MK-:!tB/", "https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
-    var user3 = new UserModel("Francisco", "adamyth@gmail.com", "Jrd},3Qpd68'S/g[","https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
+    var user3 = new UserModel("Francisco", "adamyth@gmail.com", "Jrd},3Qpd68'S/g[", "https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
     var user4 = new UserModel("Edson", "adilson.mariano5@terra.com.br", "2#E9Az)Ytpk57^w", "https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
     var user5 = new UserModel("Luciana", "adriano_wolf1@hotmail.com", "2#E9Az)Ytpk57^w", "https://pixabay.com/pt/photos/erro-n%c3%a3o-encontrado-lego-n%c3%bamero-2129569/", List.of(role));
 
@@ -108,35 +132,6 @@ public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
             activity4_user1, activity4_user2, activity4_user3, activity4_user4, activity4_user5,
             activity5_user1, activity5_user2, activity5_user3, activity5_user4, activity5_user5
     ));
-  }
-
-  public static String getRandomTitle() {
-    var title = "Eu pedalei pela " + generateRandomIntIntRange(1, 1000) + " vez!";
-    return title;
-  }
-
-  public static float getRandomDouble(){
-    float x = (float) ((Math.random()*((100-2)+1))+2);
-    return x;
-  }
-
-  public static int generateRandomIntIntRange(int min, int max) {
-    Random r = new Random();
-    return r.nextInt((max - min) + 1) + min;
-  }
-
-  public static LocalDate getRandomDate(){
-    var year = generateRandomIntIntRange(2020, 2021);
-    var month = generateRandomIntIntRange(1, 10);
-    var days = generateRandomIntIntRange(1, 28);
-    return LocalDate.of(year, month, days);
-  }
-
-  public static LocalTime getRandomTiming(){
-    var hour = generateRandomIntIntRange(0, 23);
-    var minute = generateRandomIntIntRange(0, 59);
-    var second = generateRandomIntIntRange(0, 59);
-    return LocalTime.of(hour, minute, second);
   }
 
 }

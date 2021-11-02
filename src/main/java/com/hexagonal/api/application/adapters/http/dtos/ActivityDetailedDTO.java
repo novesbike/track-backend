@@ -1,7 +1,7 @@
 package com.hexagonal.api.application.adapters.http.dtos;
 
 import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.domain.entity.Coordinate;
+import com.hexagonal.api.core.domain.valueobjects.Coordinate;
 import lombok.Data;
 
 import java.time.Instant;
@@ -18,7 +18,7 @@ public class ActivityDetailedDTO {
   private String title;
   private String description;
   private LocalDate date;
-  private LocalTime timing;
+  private LocalTime duration;
   private float averageSpeed;
   private float distance;
   private float elevation;
@@ -33,7 +33,7 @@ public class ActivityDetailedDTO {
     this.title = activity.getTitle();
     this.description = activity.getDescription();
     this.date = activity.getDate();
-    this.timing = activity.getTiming();
+    this.duration = activity.getDuration();
     this.averageSpeed = activity.getAverageSpeed();
     this.distance = activity.getDistance();
     this.elevation = activity.getElevation();

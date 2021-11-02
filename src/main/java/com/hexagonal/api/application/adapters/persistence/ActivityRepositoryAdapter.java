@@ -3,7 +3,8 @@ package com.hexagonal.api.application.adapters.persistence;
 import com.hexagonal.api.application.adapters.persistence.jpa.ActivityJpaRepository;
 import com.hexagonal.api.application.adapters.persistence.model.ActivityModel;
 import com.hexagonal.api.core.domain.entity.Activity;
-import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
+import com.hexagonal.api.core.ports.outbound.repository.ActivityRepositoryPort;
+import com.hexagonal.api.core.domain.valueobjects.ActivityStats;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,11 @@ public class ActivityRepositoryAdapter implements ActivityRepositoryPort {
   public List<Activity> searchAllMyActivities(UUID id) {
     var result = repository.findByUserId(id);
     return result.stream().map(ActivityModel::toDomain).collect(Collectors.toList());
+  }
+
+  @Override
+  public ActivityStats getMyStats(UUID userId) {
+    return repository.getMyStats(userId);
   }
 
   public List<Activity> findAll() {

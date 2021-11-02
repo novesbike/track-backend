@@ -29,12 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String LOGIN_URL = "/auth/login";
   private static final String[] PUBLIC_MATCHERS = {
           "/reset_password/**",
-          "/swagger-ui.html"
+          "/swagger-ui.html",
+          "/v1/activities/stats/**",
+          "/v1/**"
   };
   private static final String[] PUBLIC_MATCHERS_POST = {
           "/v1/users/register",
           "/v1/users/activate",
-          "auth/forgot-password/**",
+          "auth/forgot-password/**"
   };
   private final Environment env;
   private final UserDetailsService userDetailsService;
