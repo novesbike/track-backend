@@ -1,9 +1,9 @@
-package com.hexagonal.api.application.adapters.web.controller;
+package com.hexagonal.api.application.adapters.http.controller;
 
 import com.hexagonal.api.application.adapters.persistence.ActivityService;
-import com.hexagonal.api.application.dtos.ActivityDTO;
-import com.hexagonal.api.application.dtos.ActivityDetailedDTO;
-import com.hexagonal.api.application.dtos.SaveActivityDTO;
+import com.hexagonal.api.application.adapters.http.dtos.ActivityDTO;
+import com.hexagonal.api.application.adapters.http.dtos.ActivityDetailedDTO;
+import com.hexagonal.api.application.adapters.http.dtos.SaveActivityDTO;
 import com.hexagonal.api.core.ports.inbound.GetActivityHistory;
 import com.hexagonal.api.core.ports.inbound.SaveMyActivity;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,7 +26,6 @@ public class ActivityController {
   @PostMapping
   public ResponseEntity<ActivityDetailedDTO> saveActivity(@RequestBody SaveActivityDTO activity) {
     var saved = saveMyActivity.execute(
-            activity.getUserId(),
             activity.getTitle(),
             activity.getDescription(),
             activity.getDate(),
@@ -43,8 +41,8 @@ public class ActivityController {
 
 
   @GetMapping
-  public ResponseEntity<List<ActivityDTO>> getActivityHistory(@RequestParam UUID user) {
-    var activityList = getActivityHistory.execute(user);
+  public ResponseEntity<List<ActivityDTO>> getActivityHistory() {
+    var activityList = getActivityHistory.execute();
     var dto = activityList.stream().map(ActivityDTO::new).collect(Collectors.toList());
     return ResponseEntity.ok(dto);
   }

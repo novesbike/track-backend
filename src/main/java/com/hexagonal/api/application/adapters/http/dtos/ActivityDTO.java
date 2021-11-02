@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.dtos;
+package com.hexagonal.api.application.adapters.http.dtos;
 
 import com.hexagonal.api.core.domain.entity.Activity;
 import lombok.Data;

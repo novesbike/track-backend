@@ -4,6 +4,7 @@ import com.hexagonal.api.NovesBikeApplication;
 import com.hexagonal.api.core.ports.inbound.*;
 import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.EmailServicePort;
+import com.hexagonal.api.core.ports.outbound.SecurityPort;
 import com.hexagonal.api.core.ports.outbound.repository.RoleRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
 import com.hexagonal.api.core.usecases.*;
@@ -36,13 +37,13 @@ public class CoreInject {
   }
 
   @Bean
-  GetActivityHistory getActivityHistory(ActivityRepositoryPort repository) {
-    return new GetActivityHistoryImpl(repository);
+  GetActivityHistory getActivityHistory(ActivityRepositoryPort repository, SecurityPort security) {
+    return new GetActivityHistoryImpl(repository, security);
   }
 
   @Bean
-  SaveMyActivity saveMyActivity(ActivityRepositoryPort repository, UserRepositoryPort userRepository) {
-    return new SaveMyActivityImpl(repository, userRepository);
+  SaveMyActivity saveMyActivity(ActivityRepositoryPort repository, SecurityPort security) {
+    return new SaveMyActivityImpl(repository, security);
   }
 
 }

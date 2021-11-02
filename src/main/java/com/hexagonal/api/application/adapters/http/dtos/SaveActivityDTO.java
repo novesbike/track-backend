@@ -1,19 +1,15 @@
-package com.hexagonal.api.application.dtos;
+package com.hexagonal.api.application.adapters.http.dtos;
 
 import com.hexagonal.api.core.domain.entity.Coordinate;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class SaveActivityDTO {
 
-  @NotNull
-  private UUID userId;
   private String title;
   private String description;
   private LocalDate date;

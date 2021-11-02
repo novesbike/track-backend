@@ -2,30 +2,27 @@ package com.hexagonal.api.core.usecases;
 
 import com.hexagonal.api.core.domain.entity.Activity;
 import com.hexagonal.api.core.domain.entity.Coordinate;
-import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
-import com.hexagonal.api.core.domain.exception.ResourceNotFoundException;
+import com.hexagonal.api.core.domain.exception.BusinessRuleException;
 import com.hexagonal.api.core.ports.inbound.SaveMyActivity;
 import com.hexagonal.api.core.ports.outbound.ActivityRepositoryPort;
-import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
+import com.hexagonal.api.core.ports.outbound.SecurityPort;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 public class SaveMyActivityImpl implements SaveMyActivity {
 
   private final ActivityRepositoryPort repository;
-  private final UserRepositoryPort userRepository;
+  private final SecurityPort security;
 
-  public SaveMyActivityImpl(ActivityRepositoryPort repository, UserRepositoryPort userRepository) {
+  public SaveMyActivityImpl(ActivityRepositoryPort repository, SecurityPort security) {
     this.repository = repository;
-    this.userRepository = userRepository;
+    this.security = security;
   }
 
   @Override
   public Activity execute(
-          UUID idUser,
           String title,
           String description,
           LocalDate date,
@@ -36,11 +33,8 @@ public class SaveMyActivityImpl implements SaveMyActivity {
           List<Coordinate> coordinates
   ) {
 
-    if (idUser == null) throw new InvalidAttributeException("The given idUser must not be null");
-
-    var user = userRepository.findUserById(idUser).orElseThrow(
-            () -> new ResourceNotFoundException("User not found")
-    );
+    var user = security.getAuthenticatedUser()
+            .orElseThrow(() -> new BusinessRuleException("No authorized!"));
 
     var activity = new Activity(
             user,

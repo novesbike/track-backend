@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.dtos;
+package com.hexagonal.api.application.adapters.http.dtos;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -20,12 +20,10 @@ public class RegisterUserResponseDTO {
   private UUID id;
   private String email;
   private String fullName;
-  private List<String> roles;
 
   public RegisterUserResponseDTO(User accountCreated) {
     this.id = accountCreated.getId();
     this.email = accountCreated.getEmail();
     this.fullName = accountCreated.getName();
-    this.roles = accountCreated.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toList());
   }
 }

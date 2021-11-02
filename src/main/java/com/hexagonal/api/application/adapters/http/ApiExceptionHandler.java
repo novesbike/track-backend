@@ -1,4 +1,4 @@
-package com.hexagonal.api.application.adapters.web;
+package com.hexagonal.api.application.adapters.http;
 
 import com.hexagonal.api.core.domain.exception.BusinessRuleException;
 import com.hexagonal.api.core.domain.exception.EmailAlreadyRegisteredException;
