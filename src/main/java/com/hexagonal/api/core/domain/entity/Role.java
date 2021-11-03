@@ -34,22 +34,6 @@ public class Role {
     setDescription(description);
   }
 
-  public UUID getId() {
-    return id;
-  }
-
-  public String getRole() {
-    return name;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
-
   public void setName(String name) {
     if (name == null || name.isBlank())
       throw new InvalidAttributeException("Role name cannot be null or empty");
@@ -62,6 +46,22 @@ public class Role {
       throw new InvalidAttributeException("Role description cannot be null or empty");
 
     this.description = description;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public Instant getCreatedAt() {
@@ -83,6 +83,6 @@ public class Role {
 
   @Override
   public String toString() {
-    return getRole();
+    return getName();
   }
 }

@@ -13,11 +13,11 @@ public class RoleSecurity extends Role implements GrantedAuthority {
   }
 
   public RoleSecurity(Role role) {
-    this(role.getId(), role.getRole(), role.getDescription(), role.getCreatedAt());
+    this(role.getId(), role.getName(), role.getDescription(), role.getCreatedAt());
   }
 
   @Override
   public String getAuthority() {
-    return this.getRole();
+    return this.getName();
   }
 }

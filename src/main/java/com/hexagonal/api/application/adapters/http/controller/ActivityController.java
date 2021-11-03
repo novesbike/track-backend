@@ -23,7 +23,6 @@ public class ActivityController {
   private final SaveMyActivity saveMyActivity;
   private final GetActivityHistory getActivityHistory;
   private final GetMyStats getMyStats;
-  private final FetchAllUsers fetchAllUser;
 
   @PostMapping
   public ResponseEntity<ActivityDetailedDTO> saveActivity(@RequestBody SaveActivityDTO activity) {

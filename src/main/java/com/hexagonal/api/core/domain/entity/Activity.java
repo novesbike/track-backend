@@ -93,7 +93,7 @@ public class Activity  {
   }
 
   public void setUser(User user) {
-    if (duration == null) throw new InvalidAttributeException("user cannot be null");
+    if (user == null) throw new InvalidAttributeException("user cannot be null");
     this.user = user;
   }
 

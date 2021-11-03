@@ -30,7 +30,7 @@ public class RoleModel {
 
   public RoleModel(Role domain) {
     this.id = domain.getId();
-    this.name = domain.getRole();
+    this.name = domain.getName();
     this.description = domain.getDescription();
     this.createdAt = domain.getCreatedAt();
   }
