@@ -1,15 +1,10 @@
 spring:
   mail:
-    host: ${EMAIL_HOST}
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-    port: 587
     properties:
       mail:
         smtp:
-          auth: true
-          starttls:
-            enable: true
+          ssl:
+            enable: false
 
   datasource:
     driverClassName: org.h2.Driver
@@ -27,3 +22,7 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    root: DEBUG

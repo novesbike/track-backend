@@ -11,12 +11,12 @@ import java.util.UUID;
 public class UserUpdatedDTO {
 
   private UUID id;
-  private String fullName;
+  private String name;
   private String avatar;
 
   public UserUpdatedDTO(User user) {
     this.id = user.getId();
-    this.fullName = user.getName();
+    this.name = user.getName();
     this.avatar = user.getAvatar();
   }
 }

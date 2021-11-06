@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 
 @Component
 public class JWTUtil {
@@ -23,11 +24,20 @@ public class JWTUtil {
 
     return Jwts.builder()
             .setSubject(user.getUsername())
-            .claim("name", user.getName())
+            .claim("user", buildUser(user))
             .setIssuedAt(date)
             .setExpiration(new Date(date.getTime() + expiration))
             .signWith(SignatureAlgorithm.HS512, secret.getBytes())
             .compact();
+  }
+
+  private HashMap<String, Object> buildUser(UserSecurity user) {
+    var hash = new HashMap<String, Object>();
+    hash.put("id", user.getId());
+    hash.put("name", user.getName());
+    hash.put("avatar", user.getAvatar());
+
+    return hash;
   }
 
   public boolean isValidToken(String token) {

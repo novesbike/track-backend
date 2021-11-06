@@ -1,15 +1,35 @@
 spring:
+  # run application mode
   profiles:
     active: ${PROFILE:test}
+
   jpa:
     open-in-view: false
+
+  # enable snack_case for response JSON
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+  # file size limit
   servlet:
     multipart:
-      max-file-size: 2MB
-      max-request-size: 2MB
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+  # e-mail configuration
+  mail:
+    host: ${EMAIL_HOST}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    port: ${EMAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
 
 server:
   port: 8080
@@ -19,5 +39,11 @@ server:
 jwt:
   secret: ${JWT_SECRET:testprofile}
   expiration: 1800000
+
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss} - %msg%n"
+  level:
+    root: DEBUG
 
 

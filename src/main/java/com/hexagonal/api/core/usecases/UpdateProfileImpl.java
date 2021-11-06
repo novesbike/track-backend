@@ -5,7 +5,6 @@ import com.hexagonal.api.core.domain.entity.User;
 import com.hexagonal.api.core.domain.exception.BusinessRuleException;
 import com.hexagonal.api.core.domain.valueobjects.File;
 import com.hexagonal.api.core.ports.inbound.UpdateProfile;
-import com.hexagonal.api.core.ports.outbound.SecurityPort;
 import com.hexagonal.api.core.ports.outbound.repository.AttachmentRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
 import org.springframework.util.StringUtils;
@@ -29,17 +28,20 @@ public class UpdateProfileImpl implements UpdateProfile {
     var user = userRepositoryPort.findUserById(idUser)
             .orElseThrow(() -> new BusinessRuleException("Usuário não encontrado"));
 
-
-    var avatar = storage(file, user);
-
     user.setName(name);
-    user.setAvatar(String.format("%s/%s", requestURL, avatar.getId()));
+
+    if (file != null) {
+      var avatar = storage(file, user);
+      user.setAvatar(String.format("%s/%s", requestURL, avatar.getId()));
+    }
 
     return userRepositoryPort.save(user);
   }
 
   @Override
   public Attachment storage(File file, User user) throws IOException {
+    if (file == null) return null;
+
     var fileName = StringUtils.cleanPath(file.getOriginalFilename());
     var attachment = new Attachment(fileName, file.getContentType(), file.getBytes(), user);
     return attachmentRepositoryPort.save(attachment);

@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 
-//@Service
-//@Profile("dev")
+@Service
+@Profile({"dev", "test"})
 @AllArgsConstructor
 public class EmailService implements EmailServicePort {
 

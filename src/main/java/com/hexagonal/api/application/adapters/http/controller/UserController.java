@@ -35,7 +35,7 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<UserUpdatedDTO> uploadFile(
           @PathVariable("id") UUID idUser,
-          @RequestParam("file") MultipartFile file,
+          @RequestParam(value = "file", required = false) MultipartFile file,
           @RequestParam(value = "username", required = false) String name
 
   ) throws IOException {
@@ -45,10 +45,12 @@ public class UserController {
             .path("/v1/avatar")
             .toUriString();
 
+    var attachment = file != null ? new FileAdapter(file) : null;
+
     var updated = updateProfile.execute(
             idUser,
             name,
-            new FileAdapter(file),
+            attachment,
             fileDownloadUri
     );
 

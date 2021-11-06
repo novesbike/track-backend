@@ -18,6 +18,7 @@ import java.util.ArrayList;
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ApiErrorResponse> resourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
     return buildMessageError(ex.getMessage(), request, HttpStatus.NOT_FOUND);
