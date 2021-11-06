@@ -9,6 +9,7 @@ import com.hexagonal.api.application.adapters.persistence.model.UserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,9 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@Profile({"dev", "test"})
 @RequiredArgsConstructor
-public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
+public class Seeds implements ApplicationListener<ContextRefreshedEvent> {
 
   private RoleJpaRepository repository;
   private UserJpaRepository userJpaRepository;
@@ -28,7 +30,7 @@ public class AddRoles implements ApplicationListener<ContextRefreshedEvent> {
   private BCryptPasswordEncoder bCrypt;
 
   @Autowired
-  public AddRoles(RoleJpaRepository repository, UserJpaRepository userJpaRepository, ActivityJpaRepository activityJpaRepository, BCryptPasswordEncoder bCrypt) {
+  public Seeds(RoleJpaRepository repository, UserJpaRepository userJpaRepository, ActivityJpaRepository activityJpaRepository, BCryptPasswordEncoder bCrypt) {
     this.repository = repository;
     this.userJpaRepository = userJpaRepository;
     this.activityJpaRepository = activityJpaRepository;
