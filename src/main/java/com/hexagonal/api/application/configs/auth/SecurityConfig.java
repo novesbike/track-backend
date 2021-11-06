@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           "/reset_password/**",
           "/swagger-ui.html",
           "/v1/activities/stats/**",
-          "/v1/**"
   };
   private static final String[] PUBLIC_MATCHERS_POST = {
           "/v1/users/register",

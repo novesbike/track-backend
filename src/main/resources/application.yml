@@ -6,6 +6,11 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
 server:
   port: 8080
   servlet:
@@ -14,3 +19,5 @@ server:
 jwt:
   secret: ${JWT_SECRET:testprofile}
   expiration: 1800000
+
+

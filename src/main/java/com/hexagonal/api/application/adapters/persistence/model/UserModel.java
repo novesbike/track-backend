@@ -1,6 +1,5 @@
 package com.hexagonal.api.application.adapters.persistence.model;
 
-import com.hexagonal.api.core.domain.entity.Role;
 import com.hexagonal.api.core.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +36,9 @@ public class UserModel {
   @Column(nullable = false)
   private String name;
   private String avatar;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+  private AttachmentModel file;
 
   @OneToMany(mappedBy="user")
   private List<ActivityModel> activities;

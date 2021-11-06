@@ -5,6 +5,7 @@ import com.hexagonal.api.core.ports.inbound.*;
 import com.hexagonal.api.core.ports.outbound.repository.ActivityRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.EmailServicePort;
 import com.hexagonal.api.core.ports.outbound.SecurityPort;
+import com.hexagonal.api.core.ports.outbound.repository.AttachmentRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.repository.RoleRepositoryPort;
 import com.hexagonal.api.core.ports.outbound.repository.UserRepositoryPort;
 import com.hexagonal.api.core.usecases.*;
@@ -54,6 +55,16 @@ public class CoreInject {
   @Bean
   GetMyStats getMyStats(ActivityRepositoryPort repository, SecurityPort security) {
     return new GetMyStatsImpl(repository, security);
+  }
+
+  @Bean
+  UpdateProfile updateProfile(AttachmentRepositoryPort attachmentRepositoryPort, UserRepositoryPort userJpaRepository) {
+    return new UpdateProfileImpl(attachmentRepositoryPort, userJpaRepository);
+  }
+
+  @Bean
+  GetUserAvatar getUserAvatar(AttachmentRepositoryPort attachmentRepositoryPort, SecurityPort securityPort) {
+    return new GetUserAvatarImpl(attachmentRepositoryPort, securityPort);
   }
 
 }

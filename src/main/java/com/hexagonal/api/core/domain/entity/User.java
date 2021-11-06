@@ -67,6 +67,10 @@ public class User {
     this.roles.add(role);
   }
 
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
   public UUID getId() {
     return id;
   }
