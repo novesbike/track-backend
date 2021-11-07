@@ -8,4 +8,4 @@ curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-de
 
 sudo chmod +x /usr/bin/ecs-deploy
 
-ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $AWS_REPO_URL:$TRAVIS_JOB_ID -r $AWS_REGION -t 240
+ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $AWS_REPO_URL:latest -r $AWS_REGION -t 240

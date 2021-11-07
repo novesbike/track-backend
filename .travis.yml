@@ -16,8 +16,8 @@ script:
   - export PATH=$PATH:$HOME/.local/bin
   - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_REPO
   - docker build -t noves-bike-api .
-  - docker tag noves-bike-api:latest $AWS_REPO_URL:$TRAVIS_JOB_ID
-  - docker push $AWS_REPO_URL:$TRAVIS_JOB_ID
+  - docker tag noves-bike-api:latest $AWS_REPO_URL:latest
+  - docker push $AWS_REPO_URL:latest
 
 deploy:
   provider: script
