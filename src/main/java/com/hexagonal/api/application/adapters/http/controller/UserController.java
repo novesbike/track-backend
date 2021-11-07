@@ -26,7 +26,7 @@ public class UserController {
   private final FetchAllUsers fetchAllUsers;
   private final UpdateProfile updateProfile;
 
-  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
   @GetMapping
   public ResponseEntity<List<User>> index() {
     return ResponseEntity.ok(fetchAllUsers.execute());
