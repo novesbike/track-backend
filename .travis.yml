@@ -11,9 +11,6 @@ install:
   - ./mvnw clean install
 
 script:
-  - echo "no scripts"
-
-after_success:
   - docker --version
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
@@ -21,6 +18,12 @@ after_success:
   - docker build -t noves-bike-api .
   - docker tag noves-bike-api:latest $AWS_REPO_URL:$TRAVIS_JOB_ID
   - docker push $AWS_REPO_URL:$TRAVIS_JOB_ID
+
+deploy:
+  provider: script
+  script: bash deploy.sh
+#  on:
+#    branch: main
 
 cache:
   directories:
