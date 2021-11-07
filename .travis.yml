@@ -1,13 +1,27 @@
+sudo: required
+
 language: java
 
 jdk: oraclejdk11
 
-install: true
+services:
+  - docker
 
-script:
+install:
   - ./mvnw clean install
 
-# Aumentar a velocidade dos builds.
+script:
+  - echo "no scripts"
+
+after_success:
+  - docker --version
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_REPO
+  - docker build -t noves-bike-api .
+  - docker tag noves-bike-api:latest $AWS_REPO_URL
+  - docker push $AWS_REPO_URL
+
 cache:
   directories:
     - $HOME/.m2
