@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo add-apt-repository ppa:eugenesan/ppa
+sudo add-apt-repository --yes ppa:eugenesan/ppa
 sudo apt-get update -y
 sudo apt-get install jq -y
 
