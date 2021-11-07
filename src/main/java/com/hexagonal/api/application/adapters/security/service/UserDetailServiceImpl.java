@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -17,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     var user = repository
-            .findEmail(email)
+            .findEmail(email.toLowerCase())
             .orElseThrow(() -> new UsernameNotFoundException(email));
 
     return new UserSecurity(user);
