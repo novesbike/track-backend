@@ -12,6 +12,7 @@ services:
       DB_URL: db-noves
       DB_PORT: 5432
 
+      DB_HOST: ${DB_HOST}
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
