@@ -12,7 +12,7 @@
     <artifactId>hexagonal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>hexagonal</name>
-    <description>Exemplo Arquitetura Hexagonal</description>
+    <description>Noves Bike Hexagonal</description>
     <properties>
         <java.version>11</java.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
