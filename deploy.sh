@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo add-apt-repository ppa:eugenesan/ppa
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install jq -y
 
 curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy
