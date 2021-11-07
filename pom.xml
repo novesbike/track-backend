@@ -45,6 +45,13 @@
             <version>${orm.json.support}</version>
         </dependency>
 
+        <!-- PostgreSQL Database -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Database in memory for tests -->
         <dependency>
             <groupId>com.h2database</groupId>

@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+  noves-api:
+    build: .
+    image: noves-api
+    container_name: noves-api
+    environment:
+      PROFILE: ${PROFILE}
+      JWT_SECRET: ${JWT_SECRET}
+
+      DB_URL: db-noves
+      DB_PORT: 5432
+
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_PORT: ${EMAIL_PORT}
+
+    depends_on:
+      - db-noves
+    networks:
+      - noves-bike
+    ports:
+      - "8080:8080"
+
+  db-noves:
+    image: postgres:9.6.23-alpine
+    container_name: db-noves
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      - noves-bike
+    volumes:
+      - noves-bike:/var/lib/postgresql/data
+
+
+  # HABILITE CASO NÃO TENHA O PGADMIN INSTALADO
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@test.com"
+      PGADMIN_DEFAULT_PASSWORD: "root"
+    ports:
+      - "8081:80"
+    depends_on:
+      - db-noves
+    networks:
+      - noves-bike
+
+volumes:
+  noves-bike:
+
+networks:
+  noves-bike:
+    driver: bridge
