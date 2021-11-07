@@ -2,36 +2,87 @@ package com.hexagonal.api.core.domain.entity;
 
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
 
+import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Role {
 
   private UUID id;
-  private String role;
+  private String name;
+  private String description;
+  private Instant createdAt;
 
-  public Role(String role) {
-    this.role = role;
+  // create role
+  public Role(String name, String description) {
+    setName(name);
+    setDescription(description);
   }
 
-  public Role(UUID id, String role) {
+  // mapper role
+  public Role(UUID id, String name, String description, Instant createdAt) {
     this.id = id;
-    this.role = role;
+    setName(name);
+    setDescription(description);
+    this.createdAt = createdAt;
+  }
+
+  // mapper role
+  public Role(UUID id, String name, String description) {
+    this.id = id;
+    setName(name);
+    setDescription(description);
+  }
+
+  public void setName(String name) {
+    if (name == null || name.isBlank())
+      throw new InvalidAttributeException("Role name cannot be null or empty");
+
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    if (description == null || description.isBlank())
+      throw new InvalidAttributeException("Role description cannot be null or empty");
+
+    this.description = description;
   }
 
   public UUID getId() {
     return id;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
   public void setId(UUID id) {
     this.id = id;
   }
 
-  public String getRole() {
-    return role;
+  public Instant getCreatedAt() {
+    return createdAt;
   }
 
-  public void setRole(String role) {
-    if (role == null || role.isBlank()) throw new InvalidAttributeException("");
-    this.role = role;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Role comparable = (Role) o;
+    return name.equals(comparable.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
+
+  @Override
+  public String toString() {
+    return getName();
   }
 }

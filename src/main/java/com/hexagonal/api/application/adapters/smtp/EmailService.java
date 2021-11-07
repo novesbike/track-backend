@@ -1,6 +1,5 @@
 package com.hexagonal.api.application.adapters.smtp;
 
-import com.hexagonal.api.core.domain.entity.UserAuth;
 import com.hexagonal.api.core.ports.outbound.EmailServicePort;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-@Profile("dev")
+@Profile({"dev", "test"})
 @AllArgsConstructor
 public class EmailService implements EmailServicePort {
 
@@ -19,12 +18,12 @@ public class EmailService implements EmailServicePort {
 
   @Async
   @Override
-  public void sendConfirmation(UserAuth account) {
+  public void sendConfirmation(String name, String email) {
     SimpleMailMessage message = new SimpleMailMessage();
-    message.setTo(account.getEmail());
+    message.setTo(email);
     message.setSubject("Registro Completo!");
     message.setFrom("NovesClub@gmail.com");
-    message.setText("Bem vindo " + account.getUserProfile().getFullName() + "!\n\nPara confirmar sua conta, clique no link: "
+    message.setText("Bem vindo " + name + "!\n\nPara confirmar sua conta, clique no link: "
             + "https://floating-headland-47248.herokuapp.com/users/confirm-account?token=blablabla");
 
     javaMailSender.send(message);

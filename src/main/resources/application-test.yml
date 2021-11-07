@@ -1,4 +1,11 @@
 spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: false
+
   datasource:
     driverClassName: org.h2.Driver
     password: ''
@@ -12,3 +19,7 @@ spring:
       settings:
         trace: false
         web-allow-others: false
+
+logging:
+  level:
+    root: DEBUG
