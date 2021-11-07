@@ -2,6 +2,7 @@ package com.hexagonal.api.core.domain.valueobjects;
 
 import com.hexagonal.api.core.domain.exception.InvalidAttributeException;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ public class Email {
   public Email(String value) {
     if (value == null || value.isBlank()) throw new InvalidAttributeException("Email cannot be blank");
     if (invalidEmailAddress(value)) throw new InvalidAttributeException("Email is invalid");
-    this.value = value;
+    this.value = value.toLowerCase();
   }
 
   public boolean isValidEmail(String value) {
