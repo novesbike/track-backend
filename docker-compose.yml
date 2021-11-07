@@ -3,14 +3,11 @@ version: "3"
 services:
   noves-api:
     build: .
-    image: noves-api
+    image: noves-bike-api
     container_name: noves-api
     environment:
-      PROFILE: ${PROFILE}
+      PROFILE: test
       JWT_SECRET: ${JWT_SECRET}
-
-      DB_URL: db-noves
-      DB_PORT: 5432
 
       DB_HOST: ${DB_HOST}
       DB_DATABASE: ${DB_DATABASE}
