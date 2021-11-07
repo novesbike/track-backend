@@ -37,9 +37,6 @@ public class UserModel {
   private String name;
   private String avatar;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-  private AttachmentModel file;
-
   @OneToMany(mappedBy="user")
   private List<ActivityModel> activities;
 
