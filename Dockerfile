@@ -15,14 +15,6 @@ WORKDIR /app
 
 COPY --from=build /workspace/target/*.jar /app/application.jar
 
-ENV PROFILE=test
-ENV DB_URL=localhost
-ENV DB_PORT=3306
-ENV DB_DATABASE=noves-bike
-ENV DB_USERNAME=root
-ENV DB_PASSWORD=root
-ENV JWT_SECRET=SecretKeyToGenJWTs
-
 EXPOSE 8080
 
 CMD ["java", "-Xms128m", "-Xmx256m", "-jar", "application.jar"]

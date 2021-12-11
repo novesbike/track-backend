@@ -19,6 +19,12 @@ services:
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
       EMAIL_PORT: ${EMAIL_PORT}
 
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_URL_EXPIRATION: ${AWS_URL_EXPIRATION}
+
     depends_on:
       - db-noves
     networks:
@@ -39,21 +45,6 @@ services:
       - noves-bike
     volumes:
       - noves-bike:/var/lib/postgresql/data
-
-
-  # HABILITE CASO NÃO TENHA O PGADMIN INSTALADO
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "test@test.com"
-      PGADMIN_DEFAULT_PASSWORD: "root"
-    ports:
-      - "8081:80"
-    depends_on:
-      - db-noves
-    networks:
-      - noves-bike
 
 volumes:
   noves-bike:
