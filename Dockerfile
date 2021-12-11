@@ -17,4 +17,4 @@ COPY --from=build /workspace/target/*.jar /app/application.jar
 
 EXPOSE 8080
 
-CMD ["java", "-Xms128m", "-Xmx256m", "-jar", "application.jar"]
+CMD ["java", "-Xms128m", "-Xmx1024m", "-jar", "application.jar"]
