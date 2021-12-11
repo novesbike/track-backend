@@ -46,21 +46,6 @@ services:
     volumes:
       - noves-bike:/var/lib/postgresql/data
 
-
-  # HABILITE CASO NÃO TENHA O PGADMIN INSTALADO
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "test@test.com"
-      PGADMIN_DEFAULT_PASSWORD: "root"
-    ports:
-      - "8081:80"
-    depends_on:
-      - db-noves
-    networks:
-      - noves-bike
-
 volumes:
   noves-bike:
 
