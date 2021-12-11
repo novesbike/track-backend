@@ -13,6 +13,7 @@ spring:
   # file size limit
   servlet:
     multipart:
+      enabled: true
       max-file-size: 5MB
       max-request-size: 6MB
 
@@ -43,5 +44,20 @@ jwt:
 #logging:
 #  level:
 #    root: DEBUG
+
+storage:
+  aws:
+    s3:
+      access:
+        key:
+          id: ${AWS_ACCESS_KEY_ID}
+      secret:
+        access:
+          key: ${AWS_SECRET_ACCESS_KEY}
+      default:
+        region: ${AWS_DEFAULT_REGION}
+      bucket: ${AWS_BUCKET}
+      url:
+        expiration: ${AWS_URL_EXPIRATION:5}
 
 
