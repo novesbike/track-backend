@@ -6,10 +6,11 @@ services:
     image: noves-bike-api
     container_name: noves-api
     environment:
-      PROFILE: test
+      PROFILE: ${PROFILE}
+
       JWT_SECRET: ${JWT_SECRET}
 
-      DB_HOST: ${DB_HOST}
+      DB_HOST: db-noves
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}

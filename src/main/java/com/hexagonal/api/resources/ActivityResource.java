@@ -60,7 +60,7 @@ public class ActivityResource {
             total += speed.getValue();
         }
 
-        return total / (speeds.size() );
+        return total / speeds.size();
     }
 
     private Double calculateElevationAverage() {
@@ -71,6 +71,6 @@ public class ActivityResource {
             total += speed.getValue();
         }
 
-        return total / (elevations.size() );
+        return total / elevations.size();
     }
 }
