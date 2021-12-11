@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,15 +41,15 @@ public class Activity {
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private List<ActivitySpeed> speed;
+    private List<ActivitySpeed> speed = new ArrayList<>();
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private List<ActivityElevation> elevation;
+    private List<ActivityElevation> elevation = new ArrayList<>();
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private List<ActivityCoordinates> coordinates;
+    private List<ActivityCoordinates> coordinates = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
