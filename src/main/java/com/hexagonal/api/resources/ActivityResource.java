@@ -38,10 +38,10 @@ public class ActivityResource {
         this.description = activity.getDescription();
         this.timing = activity.getTiming();
         this.distance = activity.getDistance();
-        this.speedAverage = this.calculateSpeedAverage();
         this.speed = activity.getSpeed();
-        this.elevationAverage = this.calculateElevationAverage();
+        this.speedAverage = this.calculateSpeedAverage();
         this.elevation = activity.getElevation();
+        this.elevationAverage = this.calculateElevationAverage();
         this.coordinates = activity.getCoordinates();
         this.trainingId = activity.getTraining() == null ? null : activity.getTraining().getId().toString();
         this.createdAt = activity.getCreatedAt();
@@ -53,7 +53,8 @@ public class ActivityResource {
     }
 
     private Double calculateSpeedAverage() {
-        var speeds = this.getSpeed();
+        var speeds = this.speed;
+
         Double total = 0.0;
 
         for (ActivitySpeed speed : speeds) {
@@ -64,7 +65,8 @@ public class ActivityResource {
     }
 
     private Double calculateElevationAverage() {
-        var elevations = this.getElevation();
+        var elevations = this.elevation;
+
         Double total = 0.0;
 
         for (ActivityElevation speed : elevations) {
