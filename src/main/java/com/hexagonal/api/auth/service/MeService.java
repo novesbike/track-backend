@@ -68,7 +68,7 @@ public class MeService {
             throw new InvalidAttributeException("The avatar cannot be null");
         }
 
-        List<String> allowedMimes = Arrays.asList("image/png", "image/jpeg", "image/gif", "image/bmp");
+        List<String> allowedMimes = Arrays.asList("image/png", "image/jpeg", "image/jpg", "image/gif", "image/bmp");
 
         if (!allowedMimes.contains(file.getContentType())) {
             throw new InvalidAttributeException("The avatar must be an image");
