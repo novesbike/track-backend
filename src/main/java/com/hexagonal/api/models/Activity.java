@@ -30,22 +30,20 @@ public class Activity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column
     private String description;
 
     @Column(nullable = false)
-    private LocalTime timing;
+    private LocalTime duration;
 
     @Column(nullable = false)
-    private Double distance;
+    private double distance;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private List<ActivitySpeed> speed = new ArrayList<>();
+    @Column(nullable = false)
+    private double averageSpeed;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private List<ActivityElevation> elevation = new ArrayList<>();
+    @Column(nullable = false)
+    private double altimetry;
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
@@ -65,25 +63,25 @@ public class Activity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Activity(String title, String description, LocalTime timing, Double distance, List<ActivitySpeed> speed, List<ActivityElevation> elevation, List<ActivityCoordinates> coordinates, User user, Training training) {
+    public Activity(String title, String description, LocalTime duration, double distance, double averageSpeed, double altimetry, List<ActivityCoordinates> coordinates, User user, Training training) {
         this.title = title;
         this.description = description;
-        this.timing = timing;
+        this.duration = duration;
         this.distance = distance;
-        this.speed = speed;
-        this.elevation = elevation;
+        this.averageSpeed = averageSpeed;
+        this.altimetry = altimetry;
         this.coordinates = coordinates;
         this.user = user;
         this.training = training;
     }
 
-    public Activity(String title, String description, LocalTime timing, Double distance, List<ActivitySpeed> speed, List<ActivityElevation> elevation, List<ActivityCoordinates> coordinates, User user) {
+    public Activity(String title, String description, LocalTime duration, double distance, double averageSpeed, double altimetry, List<ActivityCoordinates> coordinates, User user) {
         this.title = title;
         this.description = description;
-        this.timing = timing;
+        this.duration = duration;
         this.distance = distance;
-        this.speed = speed;
-        this.elevation = elevation;
+        this.averageSpeed = averageSpeed;
+        this.altimetry = altimetry;
         this.coordinates = coordinates;
         this.user = user;
     }
@@ -112,36 +110,36 @@ public class Activity {
         this.description = description;
     }
 
-    public LocalTime getTiming() {
-        return timing;
+    public LocalTime getDuration() {
+        return duration;
     }
 
-    public void setTiming(LocalTime timing) {
-        this.timing = timing;
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
     }
 
-    public Double getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public List<ActivitySpeed> getSpeed() {
-        return speed;
+    public double getAverageSpeed() {
+        return averageSpeed;
     }
 
-    public void setSpeed(List<ActivitySpeed> speed) {
-        this.speed = speed;
+    public void setAverageSpeed(double averageSpeed) {
+        this.averageSpeed = averageSpeed;
     }
 
-    public List<ActivityElevation> getElevation() {
-        return elevation;
+    public double getAltimetry() {
+        return altimetry;
     }
 
-    public void setElevation(List<ActivityElevation> elevation) {
-        this.elevation = elevation;
+    public void setAltimetry(double altimetry) {
+        this.altimetry = altimetry;
     }
 
     public List<ActivityCoordinates> getCoordinates() {

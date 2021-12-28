@@ -1,10 +1,10 @@
 package com.hexagonal.api.services;
 
-import com.hexagonal.api.dtos.ActivityStoreDTO;
-import com.hexagonal.api.dtos.ActivityUpdateDTO;
+import com.hexagonal.api.dtos.input.ActivityStoreDTO;
+import com.hexagonal.api.dtos.input.ActivityUpdateDTO;
 import com.hexagonal.api.exceptions.ResourceNotFoundException;
 import com.hexagonal.api.models.Activity;
-import com.hexagonal.api.models.Training;
+import com.hexagonal.api.models.ActivityStats;
 import com.hexagonal.api.models.User;
 import com.hexagonal.api.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,34 +33,21 @@ public class ActivityService {
     }
 
     public Activity store(UUID userId, ActivityStoreDTO data) {
-        User user = userService.show(userId);
-        Activity activity;
+        var user = userService.show(userId);
+
+        var activity = new Activity(
+            data.getTitle(),
+            data.getDescription(),
+            data.getDuration(),
+            data.getDistance(),
+            data.getAverageSpeed(),
+            data.getAltimetry(),
+            data.getCoordinates(),
+            user
+        );
 
         if (data.getTrainingId() != null) {
-            Training training = trainingService.show(data.getTrainingId());
-
-            activity = new Activity(
-                    data.getTitle(),
-                    data.getDescription(),
-                    data.getTiming(),
-                    data.getDistance(),
-                    data.getSpeed(),
-                    data.getElevation(),
-                    data.getCoordinates(),
-                    user,
-                    training
-            );
-        } else {
-            activity = new Activity(
-                    data.getTitle(),
-                    data.getDescription(),
-                    data.getTiming(),
-                    data.getDistance(),
-                    data.getSpeed(),
-                    data.getElevation(),
-                    data.getCoordinates(),
-                    user
-            );
+            activity.setTraining(trainingService.show(data.getTrainingId()));
         }
 
         return repository.save(activity);
@@ -77,18 +64,21 @@ public class ActivityService {
 
         activity.setTitle(data.getTitle());
         activity.setDescription(data.getDescription());
-        activity.setTiming(data.getTiming());
-        activity.setDistance(data.getDistance());
-        activity.setSpeed(data.getSpeed());
-        activity.setElevation(data.getElevation());
-        activity.setCoordinates(data.getCoordinates());
 
         return repository.save(activity);
     }
 
     public void destroy(UUID id, UUID userId) {
         this.show(id, userId);
-
         repository.deleteById(id);
+    }
+
+    public ActivityStats getMyStats(UUID userId) {
+
+        if (repository.count() > 0) {
+            return repository.getMyStats(userId);
+        }
+
+        return new ActivityStats();
     }
 }
