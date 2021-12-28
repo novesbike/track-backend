@@ -1,4 +1,4 @@
-package com.hexagonal.api.dtos;
+package com.hexagonal.api.dtos.input;
 
 import com.hexagonal.api.models.ActivityCoordinates;
 import com.hexagonal.api.models.ActivityElevation;
