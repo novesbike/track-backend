@@ -6,6 +6,8 @@ import com.hexagonal.api.repositories.ActivityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,7 +25,16 @@ public class ActivitySeeder {
         User user = userSeeder.create();
         Training training = trainingSeeder.create();
 
-        return repository.save(new Activity(faker.name().name(), faker.lorem().words(2).toString(), LocalTime.now(), faker.number().randomDouble(2, 0, 100), this.speed(), this.elevation(), this.coordinates(), user, training));
+        return repository.save(
+                new Activity(
+                        faker.name().name(),
+                        faker.lorem().words(2).toString(),
+                        LocalTime.now(), faker.number().randomDouble(2, 0, 100),
+                        faker.number().randomDouble(2, 0, 100),
+                        faker.number().randomDouble(2, -100, 100),
+                        this.coordinates(),
+                        user, training
+                ));
     }
 
     private List<ActivitySpeed> speed() {
@@ -53,7 +64,7 @@ public class ActivitySeeder {
         int x = (int) faker.number().randomNumber();
 
         for (int i = 0; i < x; i++) {
-            data.add(new ActivityCoordinates(faker.number().randomDouble(2, -100, 100), faker.number().randomDouble(2, -100, 100), LocalDateTime.now()));
+            data.add(new ActivityCoordinates(faker.number().randomDouble(2, -100, 100), faker.number().randomDouble(2, -100, 100), Timestamp.from(Instant.now())));
         }
 
         return data;

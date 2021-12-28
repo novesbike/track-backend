@@ -1,8 +1,8 @@
 package com.hexagonal.api.controllers;
 
 import com.hexagonal.api.auth.service.AuthService;
-import com.hexagonal.api.dtos.GroupStoreDTO;
-import com.hexagonal.api.dtos.GroupUpdateDTO;
+import com.hexagonal.api.dtos.input.GroupStoreDTO;
+import com.hexagonal.api.dtos.input.GroupUpdateDTO;
 import com.hexagonal.api.models.Group;
 import com.hexagonal.api.models.User;
 import com.hexagonal.api.resources.GroupResource;

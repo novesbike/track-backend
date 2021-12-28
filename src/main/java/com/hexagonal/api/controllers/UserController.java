@@ -1,7 +1,7 @@
 package com.hexagonal.api.controllers;
 
-import com.hexagonal.api.dtos.UserStoreDTO;
-import com.hexagonal.api.dtos.UserUpdateDTO;
+import com.hexagonal.api.dtos.input.UserStoreDTO;
+import com.hexagonal.api.dtos.input.UserUpdateDTO;
 import com.hexagonal.api.resources.UserResource;
 import com.hexagonal.api.services.UserService;
 import lombok.RequiredArgsConstructor;

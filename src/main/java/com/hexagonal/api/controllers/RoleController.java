@@ -1,7 +1,7 @@
 package com.hexagonal.api.controllers;
 
-import com.hexagonal.api.dtos.RoleStoreDTO;
-import com.hexagonal.api.dtos.RoleUpdateDTO;
+import com.hexagonal.api.dtos.input.RoleStoreDTO;
+import com.hexagonal.api.dtos.input.RoleUpdateDTO;
 import com.hexagonal.api.models.Role;
 import com.hexagonal.api.resources.RoleResource;
 import com.hexagonal.api.services.RoleService;
