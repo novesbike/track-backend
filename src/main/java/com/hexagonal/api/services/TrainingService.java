@@ -1,7 +1,7 @@
 package com.hexagonal.api.services;
 
-import com.hexagonal.api.dtos.TrainingStoreDTO;
-import com.hexagonal.api.dtos.TrainingUpdateDTO;
+import com.hexagonal.api.dtos.input.TrainingStoreDTO;
+import com.hexagonal.api.dtos.input.TrainingUpdateDTO;
 import com.hexagonal.api.exceptions.ResourceNotFoundException;
 import com.hexagonal.api.models.Group;
 import com.hexagonal.api.models.Training;

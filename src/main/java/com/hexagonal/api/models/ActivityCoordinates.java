@@ -1,48 +1,33 @@
 package com.hexagonal.api.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
+
+@Getter
+@Setter
+@EqualsAndHashCode
 public class ActivityCoordinates {
-    @NotNull
-    private Double latitude;
 
-    @NotNull
-    private Double longitude;
+  @NotNull
+  private Double latitude;
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime time;
+  @NotNull
+  private Double longitude;
 
-    public ActivityCoordinates(Double latitude, Double longitude, LocalDateTime time) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.time = time;
-    }
+  @NotNull
+  @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+  private Timestamp timestamp;
 
-    public Double getLatitude() {
-        return latitude;
-    }
+  public ActivityCoordinates(Double latitude, Double longitude, Timestamp timestamp) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.timestamp = timestamp;
+  }
 
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
 }

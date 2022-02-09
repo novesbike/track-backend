@@ -1,7 +1,7 @@
 package com.hexagonal.api.services;
 
-import com.hexagonal.api.dtos.GroupStoreDTO;
-import com.hexagonal.api.dtos.GroupUpdateDTO;
+import com.hexagonal.api.dtos.input.GroupStoreDTO;
+import com.hexagonal.api.dtos.input.GroupUpdateDTO;
 import com.hexagonal.api.enums.GroupLevel;
 import com.hexagonal.api.exceptions.ResourceNotFoundException;
 import com.hexagonal.api.models.Group;

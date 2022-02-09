@@ -1,7 +1,7 @@
 package com.hexagonal.api.services;
 
-import com.hexagonal.api.dtos.UserStoreDTO;
-import com.hexagonal.api.dtos.UserUpdateDTO;
+import com.hexagonal.api.dtos.input.UserStoreDTO;
+import com.hexagonal.api.dtos.input.UserUpdateDTO;
 import com.hexagonal.api.exceptions.InvalidAttributeException;
 import com.hexagonal.api.exceptions.ResourceNotFoundException;
 import com.hexagonal.api.models.Role;

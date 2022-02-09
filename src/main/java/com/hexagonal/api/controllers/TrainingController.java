@@ -1,8 +1,8 @@
 package com.hexagonal.api.controllers;
 
 import com.hexagonal.api.auth.service.AuthService;
-import com.hexagonal.api.dtos.TrainingStoreDTO;
-import com.hexagonal.api.dtos.TrainingUpdateDTO;
+import com.hexagonal.api.dtos.input.TrainingStoreDTO;
+import com.hexagonal.api.dtos.input.TrainingUpdateDTO;
 import com.hexagonal.api.models.User;
 import com.hexagonal.api.resources.TrainingResource;
 import com.hexagonal.api.services.TrainingService;

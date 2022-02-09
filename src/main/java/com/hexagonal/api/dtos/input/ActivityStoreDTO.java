@@ -1,4 +1,4 @@
-package com.hexagonal.api.dtos;
+package com.hexagonal.api.dtos.input;
 
 import com.hexagonal.api.models.ActivityCoordinates;
 import com.hexagonal.api.models.ActivityElevation;
@@ -18,21 +18,18 @@ public class ActivityStoreDTO {
     @NotBlank
     private String title;
 
-    @NotBlank
     private String description;
 
     @NotNull
-    private LocalTime timing;
+    private LocalTime duration;
 
-    @NotNull
     @Min(0)
-    private Double distance;
+    private double distance;
 
-    @NotEmpty
-    private  List<ActivitySpeed> speed;
+    @Min(0)
+    private double averageSpeed;
 
-    @NotEmpty
-    private List<ActivityElevation> elevation;
+    private double altimetry;
 
     @NotEmpty
     private List<ActivityCoordinates> coordinates;

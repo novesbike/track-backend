@@ -1,11 +1,11 @@
-package com.hexagonal.api.dtos;
+package com.hexagonal.api.dtos.input;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class RoleUpdateDTO {
+public class RoleStoreDTO {
     @NotBlank
     private String name;
 
